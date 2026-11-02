@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b12">
+<title>БАРДАК StreetSimRacing — Ялта</title>
+<meta name="description" content="Клуб автосимуляторов БАРДАК в Ялте. Гонки, дрифт и реалистичное управление.">
+<style>
+:root {
+  --bg:#080b12;
+  --panel:#111824;
+  --blue:#168cff;
+  --cyan:#00e5ff;
+  --text:#f4f7ff;
+  --muted:#a6b2c6;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.container{width:min(1160px,92%);margin:auto}
+header{
+  position:sticky;top:0;z-index:20;
+  background:#080b12eF;backdrop-filter:blur(18px);
+  border-bottom:1px solid #ffffff12;
+}
+.nav{
+  min-height:76px;display:flex;align-items:center;
+  justify-content:space-between;gap:20px;
+}
+.logo{font-weight:1000;font-size:22px;letter-spacing:1px}
+.logo span{color:var(--cyan)}
+nav{display:flex;gap:25px;color:#c5d0e2;font-size:14px}
+nav a:hover{color:var(--cyan)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:14px 21px;border-radius:10px;
+  background:linear-gradient(120deg,#168cff,#00bfff);
+  color:white;font-weight:800;border:0;cursor:pointer;
+  transition:.25s;box-shadow:0 8px 30px #168cff25;
+}
+.btn:hover{transform:translateY(-3px);filter:brightness(1.15)}
+.btn-outline{background:#ffffff08;border:1px solid #ffffff2b;box-shadow:none}
+.hero{
+  min-height:680px;display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  background:
+    linear-gradient(90deg,#080b12 0%,#080b12e8 38%,#080b1260 100%),
+    linear-gradient(0deg,#080b12 0%,transparent 35%),
+    url("https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=2000&q=85") center/cover;
+}
+.hero:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 75% 45%,#168cff22,transparent 50%);
+}
+.hero-content{position:relative;z-index:1;max-width:720px;padding:90px 0}
+.tag{
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid #00e5ff55;border-radius:30px;
+  padding:9px 13px;color:var(--cyan);
+  background:#00e5ff0c;font-size:12px;font-weight:bold;
+  text-transform:uppercase;letter-spacing:1.5px;
+}
+.dot{width:7px;height:7px;background:#00f5a0;border-radius:50%;box-shadow:0 0 12px #00f5a0}
+h1{font-size:clamp(42px,7vw,82px);line-height:.98;letter-spacing:-3px;margin:25px 0}
+h1 span{
+  color:transparent;
+  -webkit-text-stroke:1px var(--cyan);
+}
+.hero p{color:#c0cad9;font-size:18px;line-height:1.7;max-width:550px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.stats{display:flex;gap:35px;flex-wrap:wrap;margin-top:48px}
+.stat strong{display:block;font-size:25px}
+.stat small{display:block;color:var(--muted);margin-top:5px}
+section{padding:90px 0}
+.section-head{margin-bottom:35px}
+.eyebrow{color:var(--cyan);font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+h2{font-size:clamp(30px,5vw,48px);margin:12px 0;letter-spacing:-1.5px}
+.subtitle{color:var(--muted);line-height:1.7;max-width:620px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{
+  background:linear-gradient(145deg,#151e2b,#0d131e);
+  border:1px solid #ffffff12;border-radius:18px;overflow:hidden;
+  transition:.3s;
+}
+.card:hover{transform:translateY(-6px);border-color:#168cff88}
+.card img{width:100%;height:225px;object-fit:cover;display:block}
+.card-body{padding:23px}
+.card h3{margin:0 0 12px;font-size:21px}
+.card p{color:var(--muted);line-height:1.65;font-size:14px}
+.price{font-size:30px;font-weight:900;margin:20px 0}
+.price small{font-size:14px;color:var(--muted);font-weight:normal}
+.price-card.featured{border-color:var(--blue);box-shadow:0 0 35px #168cff12}
+.badge{display:inline-block;color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:1px}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.feature{
+  padding:23px;border-radius:15px;background:var(--panel);
+  border:1px solid #ffffff10;
+}
+.feature b{display:block;margin:12px 0 7px}
+.feature p{color:var(--muted);font-size:13px;line-height:1.6;margin:0}
+.icon{font-size:28px}
+.gallery{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px}
+.gallery img{
+  width:100%;height:240px;object-fit:cover;border-radius:14px;
+  cursor:pointer;transition:.3s;border:1px solid #ffffff14;
+}
+.gallery img:hover{transform:scale(1.02);filter:brightness(1.12)}
+.gallery img:first-child{height:494px;grid-row:span 2}
+.review{padding:25px}
+.stars{color:#ffd34f;letter-spacing:3px;font-size:19px}
+.review p{font-size:14px;line-height:1.8;color:#d0d8e6}
+.reviewer{font-weight:bold;margin-top:20px}
+.reviewer small{display:block;color:var(--muted);font-weight:normal;margin-top:5px}
+.cta{
+  padding:55px;border-radius:24px;
+  background:linear-gradient(120deg,#102b4d,#101a2a 60%,#073b50);
+  border:1px solid #168cff55;
+  display:flex;align-items:center;justify-content:space-between;gap:25px;
+}
+.cta h2{margin-top:0}
+.cta p{color:#c3d2e5;line-height:1.7}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.info{background:var(--panel);border:1px solid #ffffff12;border-radius:16px;padding:25px}
+.info p{color:var(--muted);line-height:1.8}
+footer{padding:35px 0;border-top:1px solid #ffffff12;color:var(--muted);font-size:13px}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.lightbox{
+  display:none;position:fixed;inset:0;background:#000e;
+  z-index:50;align-items:center;justify-content:center;padding:20px;
+}
+.lightbox img{max-width:95%;max-height:90vh;border-radius:12px}
+.lightbox.open{display:flex}
+.close{position:absolute;top:20px;right:25px;font-size:35px;cursor:pointer}
+@media(max-width:800px){
+  nav{display:none}
+  .grid{grid-template-columns:1fr 1fr}
+  .features{grid-template-columns:1fr 1fr}
+  .gallery{grid-template-columns:1fr 1fr}
+  .gallery img:first-child{height:260px;grid-row:auto}
+  .cta{padding:30px;display:block}
+  .hero{min-height:600px}
+}
+@media(max-width:520px){
+  .grid,.features,.info-grid{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr 1fr;gap:9px}
+  .gallery img,.gallery img:first-child{height:155px}
+  .hero-content{padding:70px 0}
+  h1{letter-spacing:-1.5px}
+  .hero p{font-size:16px}
+  .stats{gap:20px}
+  section{padding:65px 0}
+  .card img{height:190px}
+  .nav .btn{padding:11px 13px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="#">БАРДАК <span>/// SSR</span></a>
+    <nav>
+      <a href="#about">О клубе</a>
+      <a href="#prices">Цены</a>
+      <a href="#gallery">Фото</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a class="btn" href="tel:+79781391754">Позвонить</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="tag"><span class="dot"></span> Клуб автосимуляторов · Ялта</div>
+      <h1>ТВОЯ ГОНКА.<br><span>ТВОИ ПРАВИЛА.</span></h1>
+      <p>Почувствуй скорость, освой гоночный кокпит и проверь свои навыки за рулём. Реалистичные автосимуляторы и атмосфера настоящего автоспорта.</p>
+      <div class="actions">
+        <a class="btn" href="#prices">Выбрать заезд →</a>
+        <a class="btn btn-outline" href="#gallery">Смотреть клуб</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>800 ₽</strong><small>от одного часа</small></div>
+        <div class="stat"><strong>29</strong><small>отзывов посетителей</small></div>
+        <div class="stat"><strong>10:00–22:00</strong><small>ежедневно*</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Больше, чем игра</div>
+      <h2>Погрузись в мир гонок</h2>
+      <p class="subtitle">Управляй автомобилем, чувствуй трассу и совершенствуй технику в клубе автосимуляторов «БАРДАК».</p>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="icon">🏎️</div><b>Гоночные кокпиты</b><p>Руль, педали и оборудование для погружения в гонку.</p></div>
+      <div class="feature"><div class="icon">⚙️</div><b>Ручная коробка</b><p>Попробуй переключать передачи и работать со сцеплением.</p></div>
+      <div class="feature"><div class="icon">🎮</div><b>Для любого уровня</b><p>Подойдёт новичкам и тем, кто уже увлечён симрейсингом.</p></div>
+      <div class="feature"><div class="icon">👥</div><b>В компании друзей</b><p>Устройте совместный заезд и сравните результаты.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="prices">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Выбирай свой формат</div>
+      <h2>Прайс-лист</h2>
+      <p class="subtitle">Выбери продолжительность заезда и приезжай за новыми впечатлениями.</p>
+    </div>
+    <div class="grid">
+      <article class="card price-card">
+        <div class="card-body">
+          <span class="badge">УТРО</span>
+          <h3>Один час</h3>
+          <p>Отличный вариант для первого знакомства с автосимулятором.</p>
+          <div class="price">800 ₽ <small>/ час</small></div>
+          <a class="btn btn-outline" href="tel:+79781391754">Уточнить условия</a>
+        </div>
+      </article>
+      <article class="card price-card featured">
+        <div class="card-body">
+          <span class="badge">ВЕЧЕР · ПОПУЛЯРНО</span>
+          <h3>Один час</h3>
+          <p>Вечерний заезд, чтобы отточить управление и насладиться гонкой.</p>
+          <div class="price">1 000 ₽ <small>/ час</small></div>
+          <a class="btn" href="tel:+79781391754">Позвонить</a>
+        </div>
+      </article>
+      <article class="card price-card">
+        <div class="card-body">
+          <span class="badge">ПОДАРОК</span>
+          <h3>Сертификат</h3>
+          <p>Подарок для тех, кто любит автомобили, скорость и игры.</p>
+          <div class="price">5 000 ₽</div>
+          <a class="btn btn-outline" href="tel:+79781391754">Узнать подробнее</a>
+        </div>
+      </article>
+    </div>
+    <div class="grid" style="margin-top:20px">
+      <article class="card"><div class="card-body"><h3>Пакет на 2 часа</h3><div class="price">1 800 ₽</div><p>Дольше заезд — больше времени на трассе.</p><a class="btn btn-outline" href="tel:+79781391754">Уточнить наличие</a></div></article>
+      <article class="card"><div class="card-body"><h3>Пакет на 3 часа</h3><div class="price">2 600 ₽</div><p>Для продолжительных игровых сессий.</p><a class="btn btn-outline" href="tel:+79781391754">Уточнить наличие</a></div></article>
+      <article class="card"><div class="card-body"><h3>Есть вопросы?</h3><p>Уточни доступность симуляторов, актуальные тарифы и условия посещения.</p><a class="btn" href="tel:+79781391754">+7 978 139-17-54</a></div></article>
+    </div>
+    <p class="subtitle" style="font-size:12px;margin-top:18px">Стоимость и условия следует подтвердить у клуба перед посещением.</p>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Атмосфера клуба</div>
+      <h2>Взгляни на гонку</h2>
+      <p class="subtitle">Фотографии оборудования и гоночной атмосферы. Нажми на фото, чтобы увеличить.</p>
+    </div>
+    <div class="gallery">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1000&q=80" alt="Спортивный автомобиль">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Автомобиль">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80" alt="Спортивная машина">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=800&q=80" alt="Автомобиль на дороге">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=800&q=80" alt="Автомобиль крупным планом">
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Мнение посетителей</div>
+      <h2>Что говорят гости</h2>
+      <p class="subtitle">На основе предоставленных тобой скриншотов отзывов.</p>
+    </div>
+    <div class="grid">
+      <article class="card review">
+        <div class="stars">★★★★★</div>
+        <p>«Место отличное, компьютеры с кокпитами подготовлены, всё очень красиво и работает более чем хорошо. Всё настроено и отзывчиво. Пришёл сюда с женой, было очень здорово».</p>
+        <div class="reviewer">Олег Вячеславович<small>Отзыв от 4 мая</small></div>
+      </article>
+      <article class="card review">
+        <div class="stars">★★★★★</div>
+        <p>«Очень крутая симуляторная установка: есть автомат и механическая коробка передач, педаль сцепления, руль вибрирует. Физика очень реалистичная. Сотрудник всё подробно объяснил».</p>
+        <div class="reviewer">Николай Цешковский<small>Отзыв от 15 января</small></div>
+      </article>
+      <article class="card review">
+        <div class="stars">★★★★★</div>
+        <p>«Отличный клуб для всех, кто увлечён гонками! Современные симуляторы, отзывчивые администраторы и дружеская атмосфера. Обязательно вернусь! Рекомендую».</p>
+        <div class="reviewer">Лёша Вишневский<small>Отзыв от 11 января</small></div>
+      </article>
+    </div>
+    <p class="subtitle" style="font-size:12px;margin-top:18px">Тексты сокращены для оформления сайта. Для публикации желательно проверить их по оригиналам.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta">
+      <div>
+        <div class="eyebrow">Готов к старту?</div>
+        <h2>Твоя следующая гонка начинается здесь</h2>
+        <p>Позвони в клуб, чтобы уточнить свободное время и забронировать заезд.</p>
+      </div>
+      <a class="btn" href="tel:+79781391754">Связаться с клубом →</a>
+    </div>
+  </div>
+</section>
+
+<section id="contacts">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Найди нас</div>
+      <h2>Контакты и адрес</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info">
+        <h3>📍 Где мы находимся</h3>
+        <p>ул. Руданского, 1<br>Ялта, 298600</p>
+        <a class="btn" target="_blank" rel="noopener" href="https://yandex.ru/maps/?text=Ялта%20улица%20Руданского%201">Построить маршрут</a>
+      </div>
+      <div class="info">
+        <h3>☎️ Связаться с нами</h3>
+        <p>Телефон: +7 (978) 139-17-54<br>Ежедневно: 10:00–22:00*</p>
+        <p><a href="tel:+79781391754">Позвонить в клуб</a><br><a href="https://langame.ru/" target="_blank" rel="noopener">langame.ru</a></p>
+      </div>
+    </div>
+    <p class="subtitle" style="font-size:12px;margin-top:18px">*Возможны изменения в нерабочие дни. Перед визитом уточняй расписание.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div><strong>БАРДАК <span style="color:var(--cyan)">/// SSR</span></strong><br>Клуб автосимуляторов · Ялта</div>
+    <div>© <span id="year"></span> · Информационный сайт клуба</div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" aria-label="Увеличенное изображение">
+  <span class="close" id="closeLightbox">&times;</span>
+  <img id="lightboxImage" alt="Увеличенное фото">
+</div>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+
+document.querySelectorAll(".gallery img").forEach(img => {
+  img.addEventListener("click", () => {
+    lightboxImage.src = img.src;
+    lightbox.classList.add("open");
+  });
+});
+
+function closeLightbox() {
+  lightbox.classList.remove("open");
+  lightboxImage.src = "";
+}
+
+document.getElementById("closeLightbox").addEventListener("click", closeLightbox);
+lightbox.addEventListener("click", event => {
+  if (event.target === lightbox) closeLightbox();
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeLightbox();
+});
+</script>
+</body>
+                                                                                                                                         </html>
